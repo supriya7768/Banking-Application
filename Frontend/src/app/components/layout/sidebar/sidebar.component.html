@@ -1,0 +1,46 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h2>Banking System</h2>
+        <p>Administrative Portal</p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li class="nav-item" *ngFor="let item of menuItems">
+        <a 
+          *ngIf="hasAccess(item.roles)"
+          [routerLink]="item.route" 
+          [class.active]="isActive(item.route)"
+          class="nav-link"
+        >
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" [innerHTML]="getIconSvg(item.icon)">
+            </svg>
+          </div>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-info" *ngIf="authService.getCurrentUser() as user">
+      <div class="user-avatar">
+        <img [src]="user.avatar || 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=1&fit=crop'" alt="User">
+      </div>
+      <div class="user-details">
+        <p class="user-name">{{ user.name }}</p>
+        <p class="user-role">{{ user.role === 'super-admin' ? 'System Admin' : 'Bank Admin' }}</p>
+      </div>
+    </div>
+  </div>
+</aside>
